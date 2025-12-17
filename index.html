@@ -1,380 +1,127 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, ChevronDown } from 'lucide-react';
-
-const DinerDeConnoisseur = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [formData, setFormData] = useState({
-    nom: '',
-    email: '',
-    profession: '',
-    message: ''
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setFormData({ nom: '', email: '', profession: '', message: '' });
-      setSubmitted(false);
-    }, 3000);
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  return (
-    <div className="bg-black text-white min-h-screen" style={{ fontFamily: 'Playfair Display, serif' }}>
-      {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/95 backdrop-blur-md py-4' : 'bg-transparent py-6'}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <div className="text-2xl" style={{ letterSpacing: '0.2em' }}>
-            <span className="text-amber-500">DÎNER</span>
-            <span className="text-white mx-2">DE</span>
-            <span className="text-amber-500">CONNOISSEUR</span>
-          </div>
-          <div className="hidden md:flex space-x-8 text-sm" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>
-            <button onClick={() => scrollToSection('concept')} className="hover:text-amber-500 transition-colors">LE CONCEPT</button>
-            <button onClick={() => scrollToSection('philosophie')} className="hover:text-amber-500 transition-colors">PHILOSOPHIE</button>
-            <button onClick={() => scrollToSection('invitation')} className="hover:text-amber-500 transition-colors">INVITATION</button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="h-screen flex flex-col items-center justify-center relative bg-gradient-to-b from-black via-gray-900 to-black px-6">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `repeating-linear-gradient(90deg, #B8860B 0px, transparent 1px, transparent 60px),
-                             repeating-linear-gradient(0deg, #B8860B 0px, transparent 1px, transparent 60px)`,
-            backgroundSize: '60px 60px'
-          }}></div>
-        </div>
-        
-        <div className="relative z-10 text-center max-w-4xl">
-          <div className="mb-8 text-amber-500 text-6xl md:text-8xl font-light" style={{ letterSpacing: '0.2em' }}>
-            DC
-          </div>
-          <h1 className="text-4xl md:text-6xl font-light mb-6" style={{ letterSpacing: '0.05em' }}>
-            Le génie se reconnaît
-          </h1>
-          <div className="h-px w-32 bg-amber-500 mx-auto mb-6"></div>
-          <p className="text-lg md:text-xl text-gray-300 mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Libreville · Janvier 2026
-          </p>
-          <p className="text-sm md:text-base text-gray-400 italic mb-12 max-w-2xl mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
-            "L'intelligence est le luxe suprême"
-          </p>
-          
-          <button 
-            onClick={() => scrollToSection('concept')}
-            className="group inline-flex items-center space-x-2 text-amber-500 hover:text-amber-400 transition-colors"
-          >
-            <span className="text-sm" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>DÉCOUVRIR</span>
-            <ChevronDown className="w-5 h-5 animate-bounce" />
-          </button>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-gray-600" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>
-          SI VOUS SAVEZ, VOUS SAVEZ
-        </div>
-      </section>
-
-      {/* Le Concept */}
-      <section id="concept" className="min-h-screen flex items-center py-20 px-6 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-12">
-            <span className="text-amber-500 text-sm" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>01</span>
-            <h2 className="text-4xl md:text-5xl font-light mt-4 mb-8">Le Concept</h2>
-            <div className="h-px w-24 bg-amber-500"></div>
-          </div>
-
-          <div className="space-y-8 text-gray-300" style={{ fontFamily: 'Inter, sans-serif', lineHeight: '1.8' }}>
-            <p className="text-lg md:text-xl">
-              Nous inversons la célèbre tradition : au lieu de ridiculiser les sots, 
-              nous honorons les génies.
-            </p>
-            
-            <p className="text-base md:text-lg">
-              Chaque invité amène son +1 le plus brillant—le visionnaire, le créateur, 
-              l'esprit exceptionnel qui mérite d'être découvert.
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-8 mt-16">
-              <div className="text-center p-6 border border-amber-500/20 hover:border-amber-500/40 transition-colors">
-                <div className="text-3xl text-amber-500 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>40-60</div>
-                <div className="text-sm" style={{ letterSpacing: '0.1em' }}>INVITÉS SÉLECTIONNÉS</div>
-              </div>
-              <div className="text-center p-6 border border-amber-500/20 hover:border-amber-500/40 transition-colors">
-                <div className="text-3xl text-amber-500 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>∞</div>
-                <div className="text-sm" style={{ letterSpacing: '0.1em' }}>CONVERSATIONS BRILLANTES</div>
-              </div>
-              <div className="text-center p-6 border border-amber-500/20 hover:border-amber-500/40 transition-colors">
-                <div className="text-3xl text-amber-500 mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>1</div>
-                <div className="text-sm" style={{ letterSpacing: '0.1em' }}>SOIRÉE INOUBLIABLE</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Philosophie */}
-      <section id="philosophie" className="min-h-screen flex items-center py-20 px-6 bg-black">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-12">
-            <span className="text-amber-500 text-sm" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>02</span>
-            <h2 className="text-4xl md:text-5xl font-light mt-4 mb-8">Notre Philosophie</h2>
-            <div className="h-px w-24 bg-amber-500"></div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12 text-gray-300" style={{ fontFamily: 'Inter, sans-serif' }}>
-            <div className="space-y-6">
-              <h3 className="text-xl text-amber-500" style={{ fontFamily: 'Playfair Display, serif' }}>Sélectivité</h3>
-              <p style={{ lineHeight: '1.8' }}>
-                L'exclusivité n'est pas une barrière, c'est une promesse. Chaque invité 
-                est choisi pour sa contribution exceptionnelle à son domaine.
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              <h3 className="text-xl text-amber-500" style={{ fontFamily: 'Playfair Display, serif' }}>Discrétion</h3>
-              <p style={{ lineHeight: '1.8' }}>
-                Ce qui se passe au Dîner reste au Dîner. Pas de caméras, pas de réseaux sociaux. 
-                Seulement des conversations authentiques.
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              <h3 className="text-xl text-amber-500" style={{ fontFamily: 'Playfair Display, serif' }}>Excellence</h3>
-              <p style={{ lineHeight: '1.8' }}>
-                De la gastronomie franco-gabonaise aux vins Moët Hennessy, chaque détail 
-                reflète notre engagement envers l'excellence.
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              <h3 className="text-xl text-amber-500" style={{ fontFamily: 'Playfair Display, serif' }}>Connexion</h3>
-              <p style={{ lineHeight: '1.8' }}>
-                Nous créons l'espace où les esprits brillants se rencontrent, où les idées 
-                naissent, où l'avenir se façonne.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-16 p-8 border-l-2 border-amber-500 bg-gray-900/30">
-            <p className="text-lg italic text-gray-300" style={{ fontFamily: 'Inter, sans-serif' }}>
-              "Seuls les connaisseurs reconnaissent les connaisseurs."
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* L'Événement */}
-      <section className="min-h-screen flex items-center py-20 px-6 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-12">
-            <span className="text-amber-500 text-sm" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>03</span>
-            <h2 className="text-4xl md:text-5xl font-light mt-4 mb-8">L'Événement</h2>
-            <div className="h-px w-24 bg-amber-500"></div>
-          </div>
-
-          <div className="space-y-12 text-gray-300" style={{ fontFamily: 'Inter, sans-serif' }}>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-amber-500 text-sm mb-4" style={{ letterSpacing: '0.15em' }}>DATE</h3>
-                <p className="text-2xl" style={{ fontFamily: 'Playfair Display, serif' }}>Samedi 18 Janvier 2026</p>
-                <p className="text-lg mt-2">20h00 précises</p>
-              </div>
-              <div>
-                <h3 className="text-amber-500 text-sm mb-4" style={{ letterSpacing: '0.15em' }}>LIEU</h3>
-                <p className="text-2xl" style={{ fontFamily: 'Playfair Display, serif' }}>Libreville, Gabon</p>
-                <p className="text-lg mt-2 text-gray-400">L'adresse sera révélée aux invités</p>
-              </div>
-            </div>
-
-            <div className="h-px bg-gray-800"></div>
-
-            <div>
-              <h3 className="text-amber-500 text-sm mb-4" style={{ letterSpacing: '0.15em' }}>TENUE</h3>
-              <p className="text-xl" style={{ fontFamily: 'Playfair Display, serif' }}>Élégance sobre</p>
-            </div>
-
-            <div>
-              <h3 className="text-amber-500 text-sm mb-4" style={{ letterSpacing: '0.15em' }}>AU PROGRAMME</h3>
-              <ul className="space-y-3 text-lg">
-                <li className="flex items-start">
-                  <span className="text-amber-500 mr-3">·</span>
-                  <span>Cocktails d'accueil avec spiritueux Moët Hennessy</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-amber-500 mr-3">·</span>
-                  <span>Dîner gastronomique fusion franco-gabonaise</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-amber-500 mr-3">·</span>
-                  <span>Conversations dirigées à tables thématiques</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-amber-500 mr-3">·</span>
-                  <span>Musique live discrète</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-amber-500 mr-3">·</span>
-                  <span>Réseautage avec l'élite francophone africaine</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Invitation Request */}
-      <section id="invitation" className="min-h-screen flex items-center py-20 px-6 bg-black">
-        <div className="max-w-2xl mx-auto w-full">
-          <div className="mb-12 text-center">
-            <span className="text-amber-500 text-sm" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>04</span>
-            <h2 className="text-4xl md:text-5xl font-light mt-4 mb-8">Demander une Invitation</h2>
-            <div className="h-px w-24 bg-amber-500 mx-auto"></div>
-          </div>
-
-          {!submitted ? (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm text-gray-400 mb-2" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>
-                  NOM COMPLET *
-                </label>
-                <input
-                  type="text"
-                  name="nom"
-                  value={formData.nom}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-transparent border-b border-gray-700 focus:border-amber-500 py-3 px-0 text-white outline-none transition-colors"
-                  style={{ fontFamily: 'Inter, sans-serif' }}
-                  placeholder="Votre nom"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-400 mb-2" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>
-                  EMAIL *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-transparent border-b border-gray-700 focus:border-amber-500 py-3 px-0 text-white outline-none transition-colors"
-                  style={{ fontFamily: 'Inter, sans-serif' }}
-                  placeholder="votre@email.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-400 mb-2" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>
-                  PROFESSION / DOMAINE *
-                </label>
-                <input
-                  type="text"
-                  name="profession"
-                  value={formData.profession}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-transparent border-b border-gray-700 focus:border-amber-500 py-3 px-0 text-white outline-none transition-colors"
-                  style={{ fontFamily: 'Inter, sans-serif' }}
-                  placeholder="Votre domaine d'expertise"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-400 mb-2" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>
-                  POURQUOI SOUHAITEZ-VOUS REJOINDRE ? *
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows="4"
-                  className="w-full bg-transparent border border-gray-700 focus:border-amber-500 py-3 px-4 text-white outline-none transition-colors resize-none"
-                  style={{ fontFamily: 'Inter, sans-serif' }}
-                  placeholder="Partagez ce qui vous rend unique..."
-                />
-              </div>
-
-              <div className="pt-6">
-                <button
-                  type="submit"
-                  className="w-full bg-amber-500 hover:bg-amber-600 text-black py-4 text-sm transition-colors flex items-center justify-center space-x-2"
-                  style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}
-                >
-                  <Mail className="w-4 h-4" />
-                  <span>SOUMETTRE MA DEMANDE</span>
-                </button>
-              </div>
-
-              <p className="text-xs text-gray-500 text-center mt-6" style={{ fontFamily: 'Inter, sans-serif' }}>
-                Invitation nominative et strictement personnelle. Nous étudions chaque demande 
-                avec attention. Vous recevrez une réponse sous 7 jours ouvrés.
-              </p>
-            </form>
-          ) : (
-            <div className="text-center py-16 space-y-6">
-              <div className="text-6xl text-amber-500 mb-6">✓</div>
-              <h3 className="text-2xl text-amber-500" style={{ fontFamily: 'Playfair Display, serif' }}>Demande Reçue</h3>
-              <p className="text-gray-400" style={{ fontFamily: 'Inter, sans-serif' }}>
-                Merci de votre intérêt pour Dîner de Connoisseur. Nous examinerons 
-                votre candidature et vous contacterons prochainement.
-              </p>
-              <p className="text-sm text-gray-500 italic" style={{ fontFamily: 'Inter, sans-serif' }}>
-                "Le génie reconnaît le génie."
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-black border-t border-gray-900 py-12 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
-            <div>
-              <h4 className="text-amber-500 text-sm mb-4" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>CONTACT</h4>
-              <p className="text-gray-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>rsvp@dinerdeconnoisseur.com</p>
-            </div>
-            <div>
-              <h4 className="text-amber-500 text-sm mb-4" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>LIBREVILLE</h4>
-              <p className="text-gray-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>Gabon, Afrique Centrale</p>
-            </div>
-            <div>
-              <h4 className="text-amber-500 text-sm mb-4" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>SUIVEZ-NOUS</h4>
-              <p className="text-gray-400 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>@dinerdeconnoisseur</p>
-            </div>
-          </div>
-          
-          <div className="mt-12 pt-8 border-t border-gray-900 text-center">
-            <p className="text-gray-600 text-xs" style={{ letterSpacing: '0.15em', fontFamily: 'Inter, sans-serif' }}>
-              © 2026 DÎNER DE CONNOISSEUR · L'INTELLIGENCE EST LE LUXE SUPRÊME
-            </p>
-          </div>
-        </div>
-      </footer>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DÎNER DE CONNOISSEUR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { background: #000; color: #fff; font-family: 'Playfair Display', serif; margin: 0; }
+    h1, h2, h3, h4 { color: #ffbf00; }
+    .section { max-width: 800px; margin: 40px auto; padding: 24px; background: #111; border-radius: 12px; }
+    .gold { color: #ffbf00; }
+    nav { background: #000; padding: 24px 0; position: sticky; top: 0; z-index: 100; }
+    nav .nav-content { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    nav .nav-links a { color: #fff; margin-left: 24px; text-decoration: none; font-family: 'Inter', sans-serif; letter-spacing: 0.1em; }
+    nav .nav-links a:hover { color: #ffbf00; }
+    .hero { text-align: center; padding: 80px 24px 40px 24px; }
+    .hero .subtitle { color: #ccc; font-family: 'Inter', sans-serif; }
+    .hero .quote { color: #aaa; font-style: italic; font-family: 'Inter', sans-serif; }
+    .btn { background: #ffbf00; color: #000; padding: 12px 32px; border: none; border-radius: 6px; font-family: 'Inter', sans-serif; font-weight: bold; letter-spacing: 0.1em; cursor: pointer; margin-top: 24px; }
+    .btn:hover { background: #ffd700; }
+    ul { padding-left: 20px; }
+    blockquote { border-left: 3px solid #ffbf00; margin: 24px 0; padding-left: 16px; color: #ccc; font-style: italic; }
+    footer { background: #000; color: #aaa; text-align: center; padding: 40px 0 20px 0; border-top: 1px solid #222; margin-top: 40px; }
+    @media (max-width: 600px) {
+      .section, nav .nav-content { max-width: 98vw; padding: 12px; }
+      .hero { padding: 40px 8px 20px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-content">
+      <div style="font-size: 1.5em; letter-spacing: 0.2em;">
+        <span class="gold">DÎNER</span> <span>DE</span> <span class="gold">CONNOISSEUR</span>
+      </div>
+      <div class="nav-links">
+        <a href="#concept">LE CONCEPT</a>
+        <a href="#philosophie">PHILOSOPHIE</a>
+        <a href="#invitation">INVITATION</a>
+      </div>
     </div>
-  );
-};
+  </nav>
 
-export default DinerDeConnoisseur;
+  <div class="hero">
+    <div style="font-size: 3em; color: #ffbf00; margin-bottom: 16px;">DC</div>
+    <h1>Le génie se reconnaît</h1>
+    <div style="height:2px; width:80px; background:#ffbf00; margin: 16px auto;"></div>
+    <div class="subtitle">Libreville · Janvier 2026</div>
+    <div class="quote">"L'intelligence est le luxe suprême"</div>
+    <a href="#concept" class="btn">DÉCOUVRIR</a>
+    <div style="margin-top:40px; color:#666; font-size:0.9em; letter-spacing:0.1em;">SI VOUS SAVEZ, VOUS SAVEZ</div>
+  </div>
+
+  <div class="section" id="concept">
+    <span class="gold" style="font-family: 'Inter', sans-serif;">01</span>
+    <h2>Le Concept</h2>
+    <div style="height:2px; width:60px; background:#ffbf00; margin-bottom:24px;"></div>
+    <p>Nous inversons la célèbre tradition : au lieu de ridiculiser les sots, nous honorons les génies.</p>
+    <p>Chaque invité amène son +1 le plus brillant—le visionnaire, le créateur, l'esprit exceptionnel qui mérite d'être découvert.</p>
+    <ul>
+      <li>40-60 INVITÉS SÉLECTIONNÉS</li>
+      <li>∞ CONVERSATIONS BRILLANTES</li>
+      <li>1 SOIRÉE INOUBLIABLE</li>
+    </ul>
+  </div>
+
+  <div class="section" id="philosophie">
+    <span class="gold" style="font-family: 'Inter', sans-serif;">02</span>
+    <h2>Notre Philosophie</h2>
+    <div style="height:2px; width:60px; background:#ffbf00; margin-bottom:24px;"></div>
+    <h3>Sélectivité</h3>
+    <p>L'exclusivité n'est pas une barrière, c'est une promesse. Chaque invité est choisi pour sa contribution exceptionnelle à son domaine.</p>
+    <h3>Discrétion</h3>
+    <p>Ce qui se passe au Dîner reste au Dîner. Pas de caméras, pas de réseaux sociaux. Seulement des conversations authentiques.</p>
+    <h3>Excellence</h3>
+    <p>De la gastronomie franco-gabonaise aux vins Moët Hennessy, chaque détail reflète notre engagement envers l'excellence.</p>
+    <h3>Connexion</h3>
+    <p>Nous créons l'espace où les esprits brillants se rencontrent, où les idées naissent, où l'avenir se façonne.</p>
+    <blockquote>"Seuls les connaisseurs reconnaissent les connaisseurs."</blockquote>
+  </div>
+
+  <div class="section" id="invitation">
+    <span class="gold" style="font-family: 'Inter', sans-serif;">04</span>
+    <h2>Demander une Invitation</h2>
+    <div style="height:2px; width:60px; background:#ffbf00; margin-bottom:24px;"></div>
+    <form>
+      <label>Nom complet*<br>
+        <input type="text" name="nom" required style="width:100%;padding:8px;margin:8px 0;border-radius:4px;border:1px solid #444;background:#222;color:#fff;">
+      </label><br>
+      <label>Email*<br>
+        <input type="email" name="email" required style="width:100%;padding:8px;margin:8px 0;border-radius:4px;border:1px solid #444;background:#222;color:#fff;">
+      </label><br>
+      <label>Profession / Domaine*<br>
+        <input type="text" name="profession" required style="width:100%;padding:8px;margin:8px 0;border-radius:4px;border:1px solid #444;background:#222;color:#fff;">
+      </label><br>
+      <label>Pourquoi souhaitez-vous rejoindre ?*<br>
+        <textarea name="message" required rows="4" style="width:100%;padding:8px;margin:8px 0;border-radius:4px;border:1px solid #444;background:#222;color:#fff;"></textarea>
+      </label><br>
+      <button type="submit" class="btn">SOUMETTRE MA DEMANDE</button>
+    </form>
+    <div style="color:#888; font-size:0.9em; margin-top:16px;">
+      Invitation nominative et strictement personnelle. Nous étudions chaque demande avec attention. Vous recevrez une réponse sous 7 jours ouvrés.
+    </div>
+  </div>
+
+  <footer>
+    <div>
+      <div style="margin-bottom:16px;">
+        <strong>CONTACT</strong><br>
+        rsvp@dinerdeconnoisseur.com
+      </div>
+      <div style="margin-bottom:16px;">
+        <strong>LIBREVILLE</strong><br>
+        Gabon, Afrique Centrale
+      </div>
+      <div style="margin-bottom:16px;">
+        <strong>SUIVEZ-NOUS</strong><br>
+        @dinerdeconnoisseur
+      </div>
+    </div>
+    <div style="margin-top:24px; color:#555;">
+      © 2026 DÎNER DE CONNOISSEUR · L'INTELLIGENCE EST LE LUXE SUPRÊME
+    </div>
+  </footer>
+</body>
+</html>
